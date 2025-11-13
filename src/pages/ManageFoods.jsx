@@ -60,6 +60,7 @@ function ManageFoods() {
               <td>{item.status}</td>
               <td>
                 <Link to={`/food/${item._id}`}>View</Link>{' '}
+                <Link to={`/update-food/${item._id}`}>Update</Link>{' '}
                 <button
                   onClick={() => {
                     const ok = window.confirm('Delete this food?')
@@ -69,6 +70,7 @@ function ManageFoods() {
                   Delete
                 </button>
               </td>
+
             </tr>
           ))}
         </tbody>

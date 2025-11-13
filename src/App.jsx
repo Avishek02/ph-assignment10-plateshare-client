@@ -11,6 +11,8 @@ import NotFound from './pages/NotFound.jsx'
 import ProtectedRoute from './auth/ProtectedRoute.jsx'
 import MyRequests from './pages/MyRequests.jsx'
 import DonorRequests from './pages/DonorRequests.jsx'
+import UpdateFood from './pages/UpdateFood.jsx'
+
 
 function App() {
   return (
@@ -56,6 +58,14 @@ function App() {
           element={
             <ProtectedRoute>
               <DonorRequests />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/update-food/:id'
+          element={
+            <ProtectedRoute>
+              <UpdateFood />
             </ProtectedRoute>
           }
         />
