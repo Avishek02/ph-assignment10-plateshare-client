@@ -13,6 +13,8 @@ function Navbar() {
         <>
           <Link to='/add-food'>Add Food</Link>
           <Link to='/manage-foods'>Manage My Foods</Link>
+          <Link to='/my-requests'>My Requests</Link>
+          <Link to='/donor-requests'>Donation Requests</Link>
         </>
       )}
       <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
