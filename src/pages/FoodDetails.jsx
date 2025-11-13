@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '../lib/api'
 import { useAuth } from '../auth/AuthProvider'
+import { success, error } from '../lib/toast'
 
 function FoodDetails() {
   const { id } = useParams()
@@ -48,12 +49,13 @@ function FoodDetails() {
     onSuccess: () => {
       reset()
       setIsModalOpen(false)
-      setFeedback('Request submitted successfully.')
+      success('Request submitted successfully.')
       queryClient.invalidateQueries({ queryKey: ['my-requests'] })
     },
     onError: err => {
-      const msg = err?.response?.data?.message || 'Request failed'
+      const msg = err?.response?.data?.message || 'Request failed.'
       setFeedback(msg)
+      error(msg)
     }
   })
 
@@ -62,10 +64,14 @@ function FoodDetails() {
       await api.patch(`/requests/${requestId}/status`, { status })
     },
     onSuccess: () => {
+      success('Request status updated.')
       queryClient.invalidateQueries({ queryKey: ['food-requests', id] })
       queryClient.invalidateQueries({ queryKey: ['donor-requests'] })
       queryClient.invalidateQueries({ queryKey: ['foods'] })
       queryClient.invalidateQueries({ queryKey: ['my-requests'] })
+    },
+    onError: () => {
+      error('Failed to update request status.')
     }
   })
 

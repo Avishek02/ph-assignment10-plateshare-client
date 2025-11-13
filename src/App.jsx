@@ -13,6 +13,8 @@ import MyRequests from './pages/MyRequests.jsx'
 import DonorRequests from './pages/DonorRequests.jsx'
 import UpdateFood from './pages/UpdateFood.jsx'
 import Footer from './components/Footer.jsx'
+import { Toaster } from 'react-hot-toast'
+
 
 
 
@@ -75,6 +77,9 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+
+      <Toaster position="top-center" />
+
       <Footer />
 
     </div>

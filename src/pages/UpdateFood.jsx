@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '../lib/api'
+import { success, error } from '../lib/toast'
 
 function UpdateFood() {
   const { id } = useParams()
@@ -49,10 +50,15 @@ function UpdateFood() {
       await api.patch(`/foods/${id}`, body)
     },
     onSuccess: () => {
+      success('Food updated successfully.')
       queryClient.invalidateQueries({ queryKey: ['food', id] })
       queryClient.invalidateQueries({ queryKey: ['my-foods'] })
       queryClient.invalidateQueries({ queryKey: ['foods'] })
+      queryClient.invalidateQueries({ queryKey: ['featured-foods'] })
       navigate('/manage-foods')
+    },
+    onError: () => {
+      error('Failed to update food.')
     }
   })
 

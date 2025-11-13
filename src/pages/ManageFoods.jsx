@@ -1,19 +1,25 @@
+import { Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../auth/AuthProvider'
 import api from '../lib/api'
-import { Link } from 'react-router-dom'
+import { confirmDelete } from '../lib/confirm'
+import { success, error } from '../lib/toast'
 
 function ManageFoods() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const email = user?.email
 
-  const { data, isLoading, isError } = useQuery({
+  const {
+    data,
+    isLoading,
+    isError
+  } = useQuery({
     queryKey: ['my-foods', email],
     enabled: !!email,
     queryFn: async () => {
       const res = await api.get('/foods')
-      return res.data.filter(item => item.donor?.email === email)
+      return res.data.filter(item => item.donor && item.donor.email === email)
     }
   })
 
@@ -22,9 +28,22 @@ function ManageFoods() {
       await api.delete(`/foods/${id}`)
     },
     onSuccess: () => {
+      success('Food deleted successfully.')
       queryClient.invalidateQueries({ queryKey: ['my-foods', email] })
+      queryClient.invalidateQueries({ queryKey: ['foods'] })
+      queryClient.invalidateQueries({ queryKey: ['featured-foods'] })
+    },
+    onError: () => {
+      error('Failed to delete food.')
     }
   })
+
+  const handleDelete = async id => {
+    const ok = await confirmDelete()
+    if (ok) {
+      deleteMutation.mutate(id)
+    }
+  }
 
   if (isLoading) return <div style={{ padding: 16 }}>Loading...</div>
   if (isError) return <div style={{ padding: 16 }}>Error loading foods</div>
@@ -44,10 +63,11 @@ function ManageFoods() {
       <table>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Food</th>
             <th>Quantity</th>
             <th>Pickup</th>
             <th>Status</th>
+            <th>Expire Date</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -58,19 +78,17 @@ function ManageFoods() {
               <td>{item.quantity}</td>
               <td>{item.pickupLocation}</td>
               <td>{item.status}</td>
+              <td>{item.expireDate ? new Date(item.expireDate).toLocaleDateString() : '-'}</td>
               <td>
                 <Link to={`/food/${item._id}`}>View</Link>{' '}
                 <Link to={`/update-food/${item._id}`}>Update</Link>{' '}
                 <button
-                  onClick={() => {
-                    const ok = window.confirm('Delete this food?')
-                    if (ok) deleteMutation.mutate(item._id)
-                  }}
+                  onClick={() => handleDelete(item._id)}
+                  disabled={deleteMutation.isPending}
                 >
-                  Delete
+                  {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
                 </button>
               </td>
-
             </tr>
           ))}
         </tbody>
