@@ -22,64 +22,69 @@ function App() {
   return (
     <div className='app-root'>
       <Navbar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/foods' element={<AvailableFoods />} />
-        <Route
-          path='/food/:id'
-          element={
-            <ProtectedRoute>
-              <FoodDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/add-food'
-          element={
-            <ProtectedRoute>
-              <AddFood />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/manage-foods'
-          element={
-            <ProtectedRoute>
-              <ManageFoods />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/my-requests'
-          element={
-            <ProtectedRoute>
-              <MyRequests />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/donor-requests'
-          element={
-            <ProtectedRoute>
-              <DonorRequests />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/update-food/:id'
-          element={
-            <ProtectedRoute>
-              <UpdateFood />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+
+
+      <main style={{ flex: 1 }}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/foods' element={<AvailableFoods />} />
+          <Route
+            path='/food/:id'
+            element={
+              <ProtectedRoute>
+                <FoodDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/add-food'
+            element={
+              <ProtectedRoute>
+                <AddFood />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/manage-foods'
+            element={
+              <ProtectedRoute>
+                <ManageFoods />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/my-requests'
+            element={
+              <ProtectedRoute>
+                <MyRequests />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/donor-requests'
+            element={
+              <ProtectedRoute>
+                <DonorRequests />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/update-food/:id'
+            element={
+              <ProtectedRoute>
+                <UpdateFood />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </main>
+
 
       <Toaster position="top-center" />
-      
+
       <Footer />
 
     </div>

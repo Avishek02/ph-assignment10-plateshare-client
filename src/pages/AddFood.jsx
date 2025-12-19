@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import api from '../lib/api'
 import { useAuth } from '../auth/AuthProvider'
-import { success, error } from '../lib/toast'
+import { success, error } from '../lib/feedback'
 import { useState } from 'react'
 
 const IMGBB_API_KEY = import.meta.env.VITE_IMGBB_API_KEY
@@ -54,13 +54,14 @@ function AddFood() {
         pickupLocation: data.pickupLocation,
         expireDate: data.expireDate,
         notes: data.notes || '',
-        food_status: 'Available',
-        donator: {
+        status: 'Available',
+        donor: {
           name: user?.displayName || '',
           email: user?.email || '',
-          image: user?.photoURL || ''
+          photoURL: user?.photoURL || ''
         }
       }
+
 
       await api.post('/foods', body)
 
@@ -75,85 +76,96 @@ function AddFood() {
   }
 
   return (
-    <div className='addfood-page'>
-      <div className='addfood-shell'>
-        <div className='addfood-card'>
-          <div className='addfood-header'>
-            <h2 className='addfood-title'>Add Fooddfdskfdskfdsfsdf</h2>
-            <div className='addfood-subrow'>
-              <div className='addfood-subtitle'>Donation listing form</div>
-              <div className='addfood-badge' title={user?.email || ''}>
-                <span className='addfood-dot' />
-                <span className='addfood-badgeText'>Donor: {user?.email || ''}</span>
+    <div className='addfood-page px-4 py-8'>
+      <div className='mx-auto w-full max-w-xl'>
+        <div className='card addfood-card'>
+          <div className=' gap-5 pb-5'>
+            <div className='flex flex-col gap-3 addfood-header rounded-t-2xl'>
+
+              <div className='flex flex-wrap items-center justify-between gap-3 pt-5'>
+                {/* <div className='text-sm addfood-subtitle'>Donation listing form</div> */}
+
+                <h2 className='text-3xl font-extrabold addfood-title `'>Add Food</h2>
+
+                <div className='badge badge-outline gap-2 max-w-full addfood-badge'>
+                  <span className='inline-block size-2 rounded-full addfood-dot' />
+                  <span className='truncate'>Donor: {user?.email || ''}</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className='addfood-body'>
-            <form onSubmit={handleSubmit(onSubmit)} className='addfood-grid'>
-              <div className='addfood-section'>
-                <p className='addfood-sectionTitle'>Food details</p>
-                <div className='addfood-field'>
-                  <input className='addfood-control' placeholder='Food Name' {...register('name', { required: true })} />
+            <form onSubmit={handleSubmit(onSubmit)} className='grid gap-4 px-5 py-5'>
+              <div className='grid gap-3 p-4 addfood-section'>
+                <div className='text-base font-extrabold text-slate-900'>Food details</div>
+
+                <input
+                  className='input input-bordered w-full addfood-input'
+                  placeholder='Food Name'
+                  {...register('name', { required: true })}
+                />
+
+                <input
+                  className='input input-bordered w-full addfood-input'
+                  placeholder='Food Quantity (e.g. Serves 2 people)'
+                  {...register('quantity', { required: true })}
+                />
+
+                <input
+                  className='input input-bordered w-full addfood-input'
+                  placeholder='Pickup Location'
+                  {...register('pickupLocation', { required: true })}
+                />
+
+                <div className='grid gap-2'>
+                  <div className='text-base font-extrabold text-slate-700'>Expire date</div>
                   <input
-                    className='addfood-control'
-                    placeholder='Food Quantity (e.g. Serves 2 people)'
-                    {...register('quantity', { required: true })}
+                    className='input input-bordered w-full addfood-input'
+                    type='date'
+                    {...register('expireDate', { required: true })}
+                    min={new Date().toISOString().split('T')[0]}
                   />
-                  <input
-                    className='addfood-control'
-                    placeholder='Pickup Location'
-                    {...register('pickupLocation', { required: true })}
-                  />
-                  <div>
-                    <div className='addfood-label'>Expire date</div>
-                    <input
-                      className='addfood-control'
-                      type='date'
-                      {...register('expireDate', { required: true })}
-                      min={new Date().toISOString().split('T')[0]}
-                    />
-                  </div>
                 </div>
               </div>
 
-              <div className='addfood-section'>
-                <p className='addfood-sectionTitle'>Image</p>
+              <div className='grid gap-3 p-4 addfood-section'>
+                <div className='text-base font-extrabold text-slate-900'>Image</div>
+
                 <input
-                  className='addfood-control'
+                  className='file-input file-input-bordered w-full addfood-input'
                   type='file'
                   accept='image/*'
                   {...register('imageFile', { required: true })}
                 />
+
                 <input type='hidden' {...register('imageUrl')} />
               </div>
 
-              <div className='addfood-section'>
-                <p className='addfood-sectionTitle'>Additional notes</p>
+              <div className='grid gap-3 p-4 addfood-section'>
+                <div className='text-base font-extrabold text-slate-900'>Additional notes</div>
+
                 <textarea
-                  className='addfood-control addfood-textarea'
+                  className='textarea textarea-bordered w-full addfood-input'
                   placeholder='Additional Notes'
                   rows={4}
                   {...register('notes')}
                 />
               </div>
 
-              <div className='addfood-actions'>
-                <button
-                  type='submit'
-                  disabled={submitting || formState.isSubmitting}
-                  className='addfood-primaryBtn'
-                >
-                  {submitting ? 'Adding...' : 'Add Food'}
-                </button>
-              </div>
+              <button
+                type='submit'
+                disabled={submitting || formState.isSubmitting}
+                className='btn w-full font-extrabold addfood-btn'
+              >
+                {submitting ? 'Adding...' : 'Add Food'}
+              </button>
             </form>
-
           </div>
         </div>
       </div>
     </div>
   )
+
+
 }
 
 export default AddFood

@@ -1,46 +1,71 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../auth/AuthProvider'
 import api from '../lib/api'
-import { confirmDelete } from '../lib/confirm'
-import { success, error } from '../lib/toast'
 import Loading from '../components/Loading'
-
+import { confirmDelete, success, error } from '../lib/feedback'
+import { useMemo, useState, useEffect } from 'react'
+import ErrorState from '../components/ErrorState'
 
 function ManageFoods() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const queryClient = useQueryClient()
-  const email = user?.email
+  const email = user?.email || ''
+  const [deletingId, setDeletingId] = useState(null)
+
+  const queryKey = useMemo(() => ['my-foods', email], [email])
 
   const { data = [], isLoading, isError } = useQuery({
-    queryKey: ['my-foods', email],
-    enabled: !!email,
+    queryKey,
+    enabled: !loading && !!email,
     queryFn: async () => {
-      const res = await api.get(`/foods?email=${email}`)
-      return res.data
-    }
+      const res = await api.get('/foods/my')
+      return Array.isArray(res.data) ? res.data : []
+    },
+    retry: 1
   })
 
+  useEffect(() => {
+    if (isError) error('Failed to load your foods.')
+  }, [isError])
+
   const deleteMutation = useMutation({
-    mutationFn: id => api.delete(`/foods/${id}`),
+    mutationFn: async id => {
+      setDeletingId(id)
+      return api.delete(`/foods/${id}`)
+    },
     onSuccess: () => {
       success('Food deleted successfully.')
-      queryClient.invalidateQueries({ queryKey: ['my-foods', email] })
+      queryClient.invalidateQueries({ queryKey })
       queryClient.invalidateQueries({ queryKey: ['foods'] })
       queryClient.invalidateQueries({ queryKey: ['featured-foods'] })
     },
     onError: () => {
       error('Failed to delete food.')
-    }
+    },
+    onSettled: () => setDeletingId(null)
   })
 
   const handleDelete = async id => {
     const ok = await confirmDelete()
-    if (ok) deleteMutation.mutate(id)
+    if (!ok) return
+    deleteMutation.mutate(id)
   }
 
+  if (loading) return <Loading />
+  if (!user) return <Navigate to="/login" replace />
+
   if (isLoading) return <Loading />
-  if (isError) return <div style={{ padding: 16 }}>Error loading foods</div>
+
+  if (isError) {
+    return (
+      <ErrorState
+        title="Manage My Foods"
+        message="Something went wrong while loading your foods. Please try again."
+        onRetry={() => queryClient.invalidateQueries({ queryKey })}
+      />
+    )
+  }
 
   return (
     <div style={{ padding: 16 }}>
@@ -49,39 +74,43 @@ function ManageFoods() {
       {data.length === 0 ? (
         <p>You have no foods yet.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Food</th>
-              <th>Quantity</th>
-              <th>Pickup</th>
-              <th>Status</th>
-              <th>Expire Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(item => (
-              <tr key={item._id}>
-                <td>{item.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.pickupLocation}</td>
-                <td>{item.food_status}</td>
-                <td>{new Date(item.expireDate).toLocaleDateString()}</td>
-                <td>
-                  <Link to={`/food/${item._id}`}>View</Link>{' '}
-                  <Link to={`/update-food/${item._id}`}>Update</Link>{' '}
-                  <button
-                    onClick={() => handleDelete(item._id)}
-                    disabled={deleteMutation.isPending}
-                  >
-                    {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
-                  </button>
-                </td>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 760 }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: 'left', padding: 10 }}>Food</th>
+                <th style={{ textAlign: 'left', padding: 10 }}>Quantity</th>
+                <th style={{ textAlign: 'left', padding: 10 }}>Pickup</th>
+                <th style={{ textAlign: 'left', padding: 10 }}>Status</th>
+                <th style={{ textAlign: 'left', padding: 10 }}>Expire Date</th>
+                <th style={{ textAlign: 'left', padding: 10 }}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map(item => {
+                const isDeleting = deletingId === item._id
+                return (
+                  <tr key={item._id}>
+                    <td style={{ padding: 10 }}>{item.name || '—'}</td>
+                    <td style={{ padding: 10 }}>{item.quantity || '—'}</td>
+                    <td style={{ padding: 10 }}>{item.pickupLocation || '—'}</td>
+                    <td style={{ padding: 10 }}>{item.status || '—'}</td>
+                    <td style={{ padding: 10 }}>
+                      {item.expireDate ? new Date(item.expireDate).toLocaleDateString() : '—'}
+                    </td>
+                    <td style={{ padding: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                      <Link to={`/food/${item._id}`}>View</Link>
+                      <Link to={`/update-food/${item._id}`}>Update</Link>
+                      <button onClick={() => handleDelete(item._id)} disabled={isDeleting}>
+                        {isDeleting ? 'Deleting...' : 'Delete'}
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   )
