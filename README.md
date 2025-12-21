@@ -1,16 +1,45 @@
-# React + Vite
+# PlateShare – Community Food Sharing Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PlateShare is a community-driven food sharing web application where users can donate surplus food and request available food items to reduce food waste.
 
-Currently, two official plugins are available:
+🌐 Live Site: https://plateshare-client.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Users can donate food with details like quantity, location, and expiry date
+- Browse available foods based on highest serving quantity
+- Firebase Authentication with Email/Password and Google Login
+- Private routes for Add Food, Manage My Foods, and Food Requests
+- Food request system with Accept / Reject workflow
 
-## React Compiler
+## Tech Stack
+- React
+- React Router DOM
+- Firebase Authentication
+- Tailwind CSS
+- Framer Motion / AOS
+- Axios
+- TanStack Query (optional)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Pages & Routes
+- `/` Home
+- `/available-foods`
+- `/food/:id` (Private)
+- `/add-food` (Private)
+- `/manage-my-foods` (Private)
+- `/my-food-requests` (Private)
+- `/login`
+- `/register`
+- `*` 404 Error Page
 
-## Expanding the ESLint configuration
+## Authentication
+- Firebase Email/Password Login
+- Google Social Login
+- Password validation enforced
+- Protected routes persist on reload
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Setup
+```bash
+git clone https://github.com/Avishek02/ph-assignment10-plateshare-client.git
+cd client
+npm install
+npm run dev

@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 import { useState } from 'react'
 import './navbar.css'
+import logo from "../assets/plateshare_logo.png";
+
 
 function Navbar() {
   const { user, logout } = useAuth()
@@ -10,9 +12,13 @@ function Navbar() {
   return (
     <nav className='nav'>
       <div className='nav-container '>
-        <Link to='/' className='nav-logo text-3xl text-brand-gradient font-extrabold'>
-          PlateShare
-        </Link>
+        <div className='flex items-center '>
+          <img src={logo} alt="plateshare logo" className='w-10 h-10' />
+          <Link to='/' className='nav-logo text-3xl text-brand-gradient font-extrabold'>
+            PlateShare
+          </Link>
+        </div>
+
 
         <div className='nav-links'>
           <Link to='/'>Home</Link>

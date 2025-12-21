@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import logo from "../assets/plateshare_logo.png";
+
 
 function Footer() {
   const year = new Date().getFullYear()
@@ -8,8 +10,12 @@ function Footer() {
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-5 md:grid-cols-5">
           <div className="md:col-span-2">
-            <div className="text-3xl text-brand-gradient font-extrabold">
-              PlateShare
+
+            <div className='flex items-center '>
+              <img src={logo} alt="plateshare logo" className='w-10 h-10' />
+              <Link to='/' className='nav-logo text-3xl text-brand-gradient font-extrabold'>
+                PlateShare
+              </Link>
             </div>
 
             <p className="mt-1 max-w-md text-sm text-[var(--text-soft)] mb-6">
