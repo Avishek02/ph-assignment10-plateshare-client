@@ -9,8 +9,8 @@ function Navbar() {
 
   return (
     <nav className='nav'>
-      <div className='nav-container'>
-        <Link to='/' className='nav-logo'>
+      <div className='nav-container '>
+        <Link to='/' className='nav-logo text-3xl text-brand-gradient font-extrabold'>
           PlateShare
         </Link>
 
@@ -24,12 +24,12 @@ function Navbar() {
               <Link to='/manage-foods'>My Foods</Link>
               <Link to='/my-requests'>My Requests</Link>
               <Link to='/donor-requests'>Donation Requests</Link>
-              <button className='logout-btn' onClick={logout}>Logout</button>
+              <button className='logout-btn inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-sm font-bold capitalize' onClick={logout}>Logout</button>
             </>
           )}
 
           {!user && (
-            <Link className='login-btn' to='/login'>Login</Link>
+            <Link className='login-btn rounded-full px-4 py-1 text-sm font-bold capitalize' to='/login'>Login</Link>
           )}
         </div>
 

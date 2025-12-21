@@ -45,16 +45,16 @@ function MyRequests() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-[var(--bg-soft)] [background:radial-gradient(900px_500px_at_15%_0%,rgba(22,163,74,.10),transparent_55%),radial-gradient(900px_500px_at_85%_0%,rgba(249,115,22,.10),transparent_55%),var(--bg-soft)]">
+    <div className=" px-4 py-8 bg-[var(--bg-main-layout)]">
       <div className="mx-auto w-full max-w-6xl">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-3xl font-extrabold text-[var(--text)]">
+          <h2 className="text-3xl font-extrabold text-[var(--primary)]">
             My Requests
           </h2>
 
-          <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-semibold border border-[rgba(249,115,22,.22)] bg-[rgba(249,115,22,.12)] text-[#7c2d12]">
-            <span className="inline-block size-2 rounded-full bg-[#f97316]" />
-            <span className="truncate">{data.length} requests</span>
+          <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-semibold border border-[var(--all-badge-border)] bg-[var(--all-badge-bg)]">
+            <span className="inline-block size-2 rounded-full bg-[var(--primary)]" />
+            <span className="truncate text-[var(--primary)]">{data.length} requests</span>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ function MyRequests() {
             <div className="overflow-x-auto">
               <table className="min-w-[900px] w-full text-left text-sm">
                 <thead>
-                  <tr className="[background:radial-gradient(600px_240px_at_10%_0%,rgba(34,197,94,.10),transparent_60%),radial-gradient(600px_240px_at_90%_0%,rgba(249,115,22,.10),transparent_60%),#ffffff]">
+                  <tr className="bg-[var(--bg-main-layout)]">
                     <th className="p-4 font-extrabold text-[var(--text)]">Food</th>
                     <th className="p-4 font-extrabold text-[var(--text)]">Donor</th>
                     <th className="p-4 font-extrabold text-[var(--text)]">Location</th>

@@ -126,33 +126,34 @@ function FoodDetails() {
     !isDonor && !!user && (food.status || '').toLowerCase() === 'available'
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-[var(--bg-soft)] [background:radial-gradient(900px_500px_at_15%_0%,rgba(22,163,74,.10),transparent_55%),radial-gradient(900px_500px_at_85%_0%,rgba(249,115,22,.10),transparent_55%),var(--bg-soft)]">
+    <div className=" px-4 py-8 bg-[var(--bg-main-layout)] ">
       <div className="mx-auto w-full max-w-3xl">
         <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-[0_14px_40px_rgba(2,6,23,.10)]">
-          <div className="p-5 border-b border-[var(--border)] mb-4 [background:radial-gradient(600px_240px_at_10%_0%,rgba(34,197,94,.10),transparent_60%),radial-gradient(600px_240px_at_90%_0%,rgba(249,115,22,.10),transparent_60%),#ffffff] rounded-t-2xl">
+          <div className="p-5 border-b border-[var(--border)] bg-[var(--bg-main-layout)] rounded-t-2xl">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-3xl font-extrabold text-[var(--accent)]">{food.name}</h2>
+              <h2 className="text-3xl font-extrabold text-[var(--primary)]">{food.name}</h2>
 
 
-              <span className="inline-flex rounded-full px-4 py-1.5 font-semibold border border-[rgba(249,115,22,.22)] bg-[rgba(249,115,22,.12)] text-[#7c2d12]">
-                <span className="inline-block size-2 rounded-full bg-[#f97316]" />
+              <span className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-semibold border border-[var(--all-badge-border)] bg-[var(--all-badge-bg)] ">
+                <span className="inline-block size-2 rounded-full bg-[var(--primary)]" />
 
-                <span className='truncate'>{food.status}</span>
+                <span className='truncate text-[var(--primary)]'>{food.status}</span>
               </span>
 
             </div>
           </div>
 
-          <div className="grid gap-5 px-5 pb-10">
+          <div className="grid gap-5 pb-10">
+
             {food.imageUrl && (
               <img
                 src={food.imageUrl}
                 alt={food.name}
-                className="w-full rounded-2xl object-cover max-h-[420px]"
+                className="w-full object-cover max-h-[420px]"
               />
             )}
 
-            <div className="grid gap-2 text-[var(--text)] mt-10">
+            <div className="grid gap-2 text-[var(--text)] px-5 mt-10">
               <p><span className='font-medium'>Quantity</span> : {food.quantity || '—'}</p>
               <p><span className='font-medium'>Pickup Location</span> : {food.pickupLocation || '—'}</p>
               <p>
@@ -170,7 +171,7 @@ function FoodDetails() {
               <button
                 disabled={!canRequest}
                 onClick={() => setIsModalOpen(true)}
-                className="w-full rounded-3xl bg-[linear-gradient(180deg,#22c55e,#16a34a)] px-4 py-3 text-lg font-bold text-white disabled:opacity-60"
+                className="mx-5 rounded-3xl bg-[linear-gradient(180deg,#22c55e,#16a34a)] px-4 py-3 text-lg font-bold text-white disabled:opacity-60"
               >
                 {canRequest ? 'Request Food' : 'Not Available'}
               </button>
@@ -236,8 +237,8 @@ function FoodDetails() {
         )}
 
         {isDonor && (
-          <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-[0_14px_40px_rgba(2,6,23,.10)] overflow-hidden">
-            <div className="[background:radial-gradient(600px_240px_at_10%_0%,rgba(34,197,94,.10),transparent_60%),radial-gradient(600px_240px_at_90%_0%,rgba(249,115,22,.10),transparent_60%),#ffffff] p-4 font-extrabold">
+          <div className="mt-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-[0_14px_40px_rgba(2,6,23,.10)] overflow-hidden">
+            <div className="bg-[var(--bg-main-layout)] p-4 font-extrabold text-[var(--primary)] text-xl">
               Requests
             </div>
             <div className="overflow-x-auto">

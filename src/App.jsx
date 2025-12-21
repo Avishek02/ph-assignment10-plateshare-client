@@ -20,11 +20,11 @@ import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
-    <div className='app-root'>
+    <div className='app-root min-h-screen flex flex-col'>
       <Navbar />
 
 
-      <main style={{ flex: 1 }}>
+      <main className='flex-1'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/foods' element={<AvailableFoods />} />

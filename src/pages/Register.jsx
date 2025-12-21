@@ -72,18 +72,18 @@ function Register() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-[var(--bg-soft)] [background:radial-gradient(900px_500px_at_15%_0%,rgba(22,163,74,.10),transparent_55%),radial-gradient(900px_500px_at_85%_0%,rgba(249,115,22,.10),transparent_55%),var(--bg-soft)]">
+    <div className=" px-4 py-8 bg-[var(--bg-main-layout)]">
       <div className="mx-auto w-full max-w-xl">
         <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-[0_14px_40px_rgba(2,6,23,.10)]">
-          <div className="p-5 border-b border-[var(--border)] mb-4 [background:radial-gradient(600px_240px_at_10%_0%,rgba(34,197,94,.10),transparent_60%),radial-gradient(600px_240px_at_90%_0%,rgba(249,115,22,.10),transparent_60%),#ffffff] rounded-t-2xl">
+          <div className="p-5 border-b border-[var(--border)] mb-4 bg-[var(--bg-main-layout)] rounded-t-2xl">
             <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-              <h2 className="text-3xl font-extrabold addfood-title">
+              <h2 className="text-3xl font-extrabold text-[var(--primary)]">
                 Register
               </h2>
 
-              <div className="inline-flex items-center gap-2 max-w-full rounded-full px-4 py-3 font-semibold border border-[rgba(249,115,22,.22)] bg-[rgba(249,115,22,.12)] text-[#7c2d12]">
-                <span className="inline-block size-2 rounded-full bg-[#f97316]" />
-                <span className="truncate">Create account</span>
+              <div className="inline-flex items-center gap-2 max-w-full rounded-full px-4 py-3 font-semibold border border-[var(--all-badge-border)] bg-[var(--all-badge-bg)]">
+                <span className="inline-block size-2 rounded-full bg-[var(--primary)]" />
+                <span className="truncate text-[var(--primary)]">Create account</span>
               </div>
             </div>
 
@@ -186,10 +186,10 @@ function Register() {
 
 
 
-            <p className="text-center text-sm text-[var(--text-soft)]">
+            <p className="text-center text-sm">
               Already have an account?{' '}
-              <Link className="text-[var(--accent)] hover:underline" to="/login">
-                Login
+              <Link className=" hover:underline" to="/login">
+                <span className='text-[var(--text)] font-semibold'>Login</span>
               </Link>
             </p>
           </form>

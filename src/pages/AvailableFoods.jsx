@@ -36,16 +36,17 @@ function AvailableFoods() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-[var(--bg-soft)] [background:radial-gradient(900px_500px_at_15%_0%,rgba(22,163,74,.10),transparent_55%),radial-gradient(900px_500px_at_85%_0%,rgba(249,115,22,.10),transparent_55%),var(--bg-soft)]">
+    <div className=" px-4 py-8 bg-[var(--bg-main-layout)]">
       <div className="mx-auto w-full max-w-6xl">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-3xl font-extrabold text-[var(--text)]">
+          <h2 className="text-3xl font-extrabold text-[var(--primary)]">
             Available Foods
           </h2>
 
-          <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-semibold border border-[rgba(249,115,22,.22)] bg-[rgba(249,115,22,.12)] text-[#7c2d12]">
-            <span className="inline-block size-2 rounded-full bg-[#f97316]" />
-            <span className="truncate">{data.length} items</span>
+
+          <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-semibold bg-[#e6f4ea]">
+            <span className="inline-block size-2 rounded-full bg-[var(--primary)]" />
+            <span className="truncate text-[var(--primary)]">{data.length} items</span>
           </div>
         </div>
 
@@ -70,17 +71,17 @@ function AvailableFoods() {
               <div className="p-5">
 
                 <div className='flex justify-between items-center mb-2'>
-                  <h3 className="text-lg font-extrabold text-[var(--accent)]">
+                  <h3 className="text-lg font-bold text-[var(--text)]">
                     {item.name}
                   </h3>
-                  <p>Quantity: {item.quantity || '—'}</p>
+                  <p><span className='font-medium'>Quantity</span> : {item.quantity || '—'}</p>
                 </div>
 
 
                 <div className="flex justify-between items-center text-sm text-[var(--text-soft)] mb-2">
-                  <p>Pickup: {item.pickupLocation || '—'}</p>
+                  <p>Pickup : {item.pickupLocation || '—'}</p>
                   <p>
-                    Expire:{' '}
+                    Expire :{' '}
                     {item.expireDate
                       ? new Date(item.expireDate).toLocaleDateString()
                       : '—'}
