@@ -9,7 +9,9 @@ function Navbar() {
   const { user, logout } = useAuth()
   const [open, setOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
+  const [hideNav, setHideNav] = useState(false)
   const profileRef = useRef(null)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -21,10 +23,31 @@ function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  useEffect(() => {
+    lastScrollY.current = window.scrollY
+
+    const handleScroll = () => {
+      const currentY = window.scrollY
+
+      if (currentY > lastScrollY.current && currentY > 80) {
+        setHideNav(true)
+        setOpen(false)
+        setProfileOpen(false)
+      } else {
+        setHideNav(false)
+      }
+
+      lastScrollY.current = currentY
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const profileImg = user?.photoURL ?? defaultAvatar
 
   return (
-    <nav className='nav'>
+    <nav className={`nav ${hideNav ? 'nav-hide' : ''}`}>
       <div className='nav-container '>
         <div className='flex items-center '>
           <img src={logo} alt="plateshare logo" className='w-10 h-10' />

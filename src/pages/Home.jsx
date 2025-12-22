@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
+import { useMemo } from 'react'
 import api from '../lib/api'
 
 function Home() {
@@ -11,6 +12,39 @@ function Home() {
       return res.data
     }
   })
+
+  const sectionVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 24 },
+      show: { opacity: 1, y: 0 }
+    }),
+    []
+  )
+
+  const featuredWrap = useMemo(
+    () => ({
+      hidden: {},
+      show: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } }
+    }),
+    []
+  )
+
+  const featuredCard = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 14, scale: 0.99 },
+      show: { opacity: 1, y: 0, scale: 1 }
+    }),
+    []
+  )
+
+  const inView = useMemo(
+    () => ({
+      initial: 'hidden',
+      whileInView: 'show',
+      viewport: { once: true, amount: 0.2 }
+    }),
+    []
+  )
 
   return (
     <div className=" bg-[var(--bg-main-layout)]">
@@ -73,18 +107,17 @@ function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.15 }}
           >
-
             <div
               className="rounded-2xl border shadow-sm"
-              style={{ borderColor: "#e6f4ea", background: "var(--bg-surface-soft)" }}
+              style={{ borderColor: '#e6f4ea', background: 'var(--bg-surface-soft)' }}
             >
               <div className="p-6 space-y-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <div className="text-sm font-semibold" style={{ color: "var(--text)" }}>
+                    <div className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
                       Live Snapshot
                     </div>
-                    <div className="mt-1 text-xs" style={{ color: "var(--text-secondary)" }}>
+                    <div className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
                       See donations today, plates saved, and donors at a glance.
                     </div>
                   </div>
@@ -92,9 +125,9 @@ function Home() {
                   <span
                     className="inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold"
                     style={{
-                      borderColor: "var(--all-badge-border)",
-                      background: "var(--all-badge-bg)",
-                      color: "var(--all-badge-color)",
+                      borderColor: 'var(--all-badge-border)',
+                      background: 'var(--all-badge-bg)',
+                      color: 'var(--all-badge-color)'
                     }}
                   >
                     Q1 Snapshot
@@ -102,53 +135,46 @@ function Home() {
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 text-center">
-                  <div
-                    className="rounded-xl border border-[#dbe7ff] bg-[#eef5ff] p-4"
-                  >
+                  <div className="rounded-xl border border-[#dbe7ff] bg-[#eef5ff] p-4">
                     <div className="text-[11px] uppercase tracking-wide text-[#3358a4]">
                       Donations today
                     </div>
-                    <div className="mt-1 text-2xl font-semibold" style={{ color: "var(--text)" }}>
+                    <div className="mt-1 text-2xl font-semibold" style={{ color: 'var(--text)' }}>
                       24
                     </div>
                   </div>
 
-                  <div
-                    className="rounded-xl border border-[#d6f3e1] bg-[#eafaf0] p-4"
-                  >
-                    <div className="text-[11px] uppercase tracking-wide text-[#1e7e34]" >
+                  <div className="rounded-xl border border-[#d6f3e1] bg-[#eafaf0] p-4">
+                    <div className="text-[11px] uppercase tracking-wide text-[#1e7e34]">
                       Plates saved
                     </div>
-                    <div className="mt-1 text-2xl font-semibold" style={{ color: "var(--text)" }}>
+                    <div className="mt-1 text-2xl font-semibold" style={{ color: 'var(--text)' }}>
                       120+
                     </div>
                   </div>
 
-                  <div
-                    className="rounded-xl border border-[#ffe7c2] bg-[#fff4e5] p-4"
-
-                  >
-                    <div className="text-[11px] uppercase tracking-wide text-[#b26a00]" >
+                  <div className="rounded-xl border border-[#ffe7c2] bg-[#fff4e5] p-4">
+                    <div className="text-[11px] uppercase tracking-wide text-[#b26a00]">
                       Active donors
                     </div>
-                    <div className="mt-1 text-2xl font-semibold" style={{ color: "var(--text)" }}>
+                    <div className="mt-1 text-2xl font-semibold" style={{ color: 'var(--text)' }}>
                       65
                     </div>
                   </div>
                 </div>
 
-                <div className="h-px w-full" style={{ background: "var(--divider)" }} />
+                <div className="h-px w-full" style={{ background: 'var(--divider)' }} />
 
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-semibold" style={{ color: "var(--text)" }}>
+                  <span className="font-semibold" style={{ color: 'var(--text)' }}>
                     Saving Foods Worldwide
                   </span>
                   <span
                     className="rounded-full border px-3 py-1.5 text-xs font-semibold"
                     style={{
-                      borderColor: "var(--all-badge-border)",
-                      background: "var(--all-badge-bg)",
-                      color: "var(--all-badge-color)",
+                      borderColor: 'var(--all-badge-border)',
+                      background: 'var(--all-badge-bg)',
+                      color: 'var(--all-badge-color)'
                     }}
                   >
                     In progress
@@ -156,48 +182,44 @@ function Home() {
                 </div>
               </div>
             </div>
-
-
-
-
           </motion.div>
         </div>
       </section>
 
-      <section className="px-4 pb-10 py-12">
+      <motion.section
+        className="px-4 pb-10 py-12"
+        variants={sectionVariants}
+        transition={{ duration: 0.5 }}
+        {...inView}
+      >
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 flex items-center text-center justify-between">
-            <div className=' w-full'>
-              <h2 className="text-3xl font-extrabold text-[var(--text)]">
-                Featured Foods
-              </h2>
-              <p className="mt-4 text-[var(--text-soft)]">
-                Handpicked donations ready for pickup
-              </p>
+            <div className=" w-full">
+              <h2 className="text-3xl font-extrabold text-[var(--text)]">Featured Foods</h2>
+              <p className="mt-4 text-[var(--text-soft)]">Handpicked donations ready for pickup</p>
             </div>
           </div>
 
-          {isLoading && (
-            <p className="text-[var(--text-soft)]">Loading featured foods...</p>
-          )}
-
-          {isError && (
-            <p className="text-[var(--text-soft)]">Failed to load featured foods.</p>
-          )}
-
+          {isLoading && <p className="text-[var(--text-soft)]">Loading featured foods...</p>}
+          {isError && <p className="text-[var(--text-soft)]">Failed to load featured foods.</p>}
           {!isLoading && !isError && (!data || data.length === 0) && (
             <p className="text-[var(--text-soft)]">No featured foods available right now.</p>
           )}
 
           {!isLoading && !isError && data && data.length > 0 && (
             <>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {data.map(food => (
+              <motion.div
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                variants={featuredWrap}
+                {...inView}
+              >
+                {data.map((food) => (
                   <motion.div
                     key={food._id}
                     className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-[0_14px_40px_rgba(2,6,23,.10)] transition"
                     whileHover={{ y: -4, scale: 1.01 }}
-                    transition={{ duration: 0.15 }}
+                    transition={{ duration: 0.18 }}
+                    variants={featuredCard}
                   >
                     {food.imageUrl && (
                       <img
@@ -208,34 +230,25 @@ function Home() {
                     )}
 
                     <div className="p-5">
-
-                      <div className='flex justify-between items-center mb-2'>
-                        <h3 className="text-lg font-bold text-[var(--text)]">
-                          {food.name}
-                        </h3>
-                        <p><span className='font-medium'>Quantity</span> : {food.quantity || '—'}</p>
+                      <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-lg font-bold text-[var(--text)]">{food.name}</h3>
+                        <p>
+                          <span className="font-medium">Quantity</span> : {food.quantity || '—'}
+                        </p>
                       </div>
 
                       <div className="flex justify-between items-center text-sm text-[var(--text-soft)] mb-2">
                         <p>Pickup : {food.pickupLocation || '—'}</p>
                         <p>
                           Expire :{' '}
-                          {food.expireDate
-                            ? new Date(food.expireDate).toLocaleDateString()
-                            : '—'}
+                          {food.expireDate ? new Date(food.expireDate).toLocaleDateString() : '—'}
                         </p>
                       </div>
 
-
                       <div className="mt-6 flex items-center justify-between">
-
-                        <div className='inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold border border-[var(--all-badge-border)] bg-[var(--all-badge-bg)]'>
-
+                        <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold border border-[var(--all-badge-border)] bg-[var(--all-badge-bg)]">
                           <span className="inline-block size-2 rounded-full bg-[var(--primary)]" />
-
-                          <span className="text-base text-[var(--primary)]">
-                            Available
-                          </span>
+                          <span className="text-base text-[var(--primary)]">Available</span>
                         </div>
 
                         <Link
@@ -244,12 +257,11 @@ function Home() {
                         >
                           View Details
                         </Link>
-
                       </div>
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
               <div className="mt-6">
                 <Link
@@ -262,11 +274,14 @@ function Home() {
             </>
           )}
         </div>
-      </section>
+      </motion.section>
 
-
-
-      <section className="relative px-4 pb-14 pt-10">
+      <motion.section
+        className="relative px-4 pb-14 pt-10"
+        variants={sectionVariants}
+        transition={{ duration: 0.55 }}
+        {...inView}
+      >
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,.18),transparent_60%)] blur-2xl" />
           <div className="absolute bottom-0 right-0 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(34,197,94,.16),transparent_60%)] blur-2xl" />
@@ -274,7 +289,6 @@ function Home() {
 
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 flex flex-col gap-2 text-center">
-
             <h2 className="text-balance text-3xl font-extrabold tracking-tight text-[var(--text)] md:text-3xl">
               Simple steps, Real impact
             </h2>
@@ -285,18 +299,18 @@ function Home() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[0_14px_40px_rgba(2,6,23,.10)]">
+            <motion.div
+              className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[0_14px_40px_rgba(2,6,23,.10)]"
+              variants={sectionVariants}
+              transition={{ duration: 0.5 }}
+              {...inView}
+            >
               <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,.18),transparent_60%)] blur-2xl transition-transform duration-500 group-hover:scale-110" />
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent,rgba(255,255,255,.04),transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
               <div className="flex items-start gap-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="h-6 w-6 text-[var(--text)]"
-                    aria-hidden="true"
-                  >
+                  <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-[var(--text)]">
                     <path
                       d="M7 10V8a5 5 0 0 1 10 0v2"
                       stroke="currentColor"
@@ -322,9 +336,7 @@ function Home() {
                   <div className="text-2xl font-extrabold text-[var(--text)]">
                     How PlateShare works
                   </div>
-                  <p className="mt-1 text-[var(--text-soft)]">
-                    Clear flow from posting to pickup.
-                  </p>
+                  <p className="mt-1 text-[var(--text-soft)]">Clear flow from posting to pickup.</p>
                 </div>
               </div>
 
@@ -335,9 +347,7 @@ function Home() {
                   </div>
                   <div>
                     <div className="font-semibold text-[var(--text)]">Sign in</div>
-                    <div className="text-sm">
-                      Publish your surplus food with a quick photo and details.
-                    </div>
+                    <div className="text-sm">Publish your surplus food with a quick photo and details.</div>
                   </div>
                 </li>
 
@@ -347,9 +357,7 @@ function Home() {
                   </div>
                   <div>
                     <div className="font-semibold text-[var(--text)]">Requests</div>
-                    <div className="text-sm">
-                      Recipients browse nearby listings and request what they need.
-                    </div>
+                    <div className="text-sm">Recipients browse nearby listings and request what they need.</div>
                   </div>
                 </li>
 
@@ -359,9 +367,7 @@ function Home() {
                   </div>
                   <div>
                     <div className="font-semibold text-[var(--text)]">Pickup</div>
-                    <div className="text-sm">
-                      Coordinate pickup time and complete the donation safely.
-                    </div>
+                    <div className="text-sm">Coordinate pickup time and complete the donation safely.</div>
                   </div>
                 </li>
               </ol>
@@ -377,20 +383,20 @@ function Home() {
                   Simple pickup
                 </span>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[0_14px_40px_rgba(2,6,23,.10)]">
+            <motion.div
+              className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[0_14px_40px_rgba(2,6,23,.10)]"
+              variants={sectionVariants}
+              transition={{ duration: 0.5 }}
+              {...inView}
+            >
               <div className="pointer-events-none absolute -left-24 -bottom-24 h-60 w-60 rounded-full bg-[radial-gradient(circle,rgba(34,197,94,.16),transparent_60%)] blur-2xl transition-transform duration-500 group-hover:scale-110" />
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent,rgba(255,255,255,.04),transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
               <div className="flex items-start gap-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="h-6 w-6 text-[var(--text)]"
-                    aria-hidden="true"
-                  >
+                  <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-[var(--text)]">
                     <path
                       d="M12 21s-7-4.4-9.5-8.7C.3 8.3 2.7 5 6.3 5c2 0 3.3 1.1 3.9 1.9.6-.8 1.9-1.9 3.9-1.9 3.6 0 6 3.3 3.8 7.3C19 16.6 12 21 12 21Z"
                       stroke="currentColor"
@@ -408,9 +414,7 @@ function Home() {
                 </div>
 
                 <div className="min-w-0">
-                  <div className="text-2xl font-extrabold text-[var(--text)]">
-                    Why it matters
-                  </div>
+                  <div className="text-2xl font-extrabold text-[var(--text)]">Why it matters</div>
                   <p className="mt-1 text-[var(--text-soft)]">
                     Less waste. More dignity. Stronger neighborhoods.
                   </p>
@@ -493,13 +497,10 @@ function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
-
-
-
+      </motion.section>
     </div>
   )
 }
