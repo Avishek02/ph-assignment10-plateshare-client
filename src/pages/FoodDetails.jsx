@@ -13,16 +13,13 @@ function FoodDetails() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const token = localStorage.getItem('token')
   const { register, handleSubmit, reset } = useForm()
 
   const foodQuery = useQuery({
     queryKey: ['food', id],
-    enabled: !!id && !!token,
+    enabled: !!id,
     queryFn: async () => {
-      const res = await api.get(`/foods/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      const res = await api.get(`/foods/${id}`)
       return res.data
     },
     retry: 1
@@ -37,11 +34,9 @@ function FoodDetails() {
 
   const requestsQuery = useQuery({
     queryKey: ['food-requests', id],
-    enabled: !!id && !!token && !!user && isDonor,
+    enabled: !!id && !!user && isDonor,
     queryFn: async () => {
-      const res = await api.get(`/requests/food/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      const res = await api.get(`/requests/food/${id}`)
       return Array.isArray(res.data) ? res.data : []
     },
     retry: 1
@@ -49,11 +44,9 @@ function FoodDetails() {
 
   const myFoodRequestQuery = useQuery({
     queryKey: ['my-food-request', id],
-    enabled: !!id && !!token && !!user && !isDonor,
+    enabled: !!id && !!user && !isDonor,
     queryFn: async () => {
-      const res = await api.get('/requests/my', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      const res = await api.get('/requests/my')
       const list = Array.isArray(res.data) ? res.data : []
       return (
         list.find(x => {
@@ -79,16 +72,12 @@ function FoodDetails() {
 
   const requestMutation = useMutation({
     mutationFn: async values => {
-      await api.post(
-        '/requests',
-        {
-          foodId: id,
-          location: values.location,
-          reason: values.reason,
-          contactNo: values.contactNo
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      await api.post('/requests', {
+        foodId: id,
+        location: values.location,
+        reason: values.reason,
+        contactNo: values.contactNo
+      })
     },
     onSuccess: () => {
       reset()
@@ -105,18 +94,10 @@ function FoodDetails() {
 
   const statusMutation = useMutation({
     mutationFn: async ({ requestId, status }) => {
-      await api.patch(
-        `/requests/${requestId}/status`,
-        { status },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      await api.patch(`/requests/${requestId}/status`, { status })
 
       if (status === 'accepted') {
-        await api.patch(
-          `/foods/${id}`,
-          { status: 'Donated' },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
+        await api.patch(`/foods/${id}`, { status: 'Donated' })
       }
     },
     onSuccess: () => {
