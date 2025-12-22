@@ -10,15 +10,12 @@ import ErrorState from '../components/ErrorState'
 function DonorRequests() {
   const { user, loading } = useAuth()
   const queryClient = useQueryClient()
-  const token = localStorage.getItem('token')
 
   const { data = [], isLoading, isError } = useQuery({
     queryKey: ['donor-requests', user?.email],
-    enabled: !loading && !!user?.email && !!token,
+    enabled: !loading && !!user?.email,
     queryFn: async () => {
-      const res = await api.get('/requests/donor', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      const res = await api.get('/requests/donor')
       return Array.isArray(res.data) ? res.data : []
     },
     retry: 1
@@ -30,18 +27,10 @@ function DonorRequests() {
 
   const statusMutation = useMutation({
     mutationFn: async ({ id, status, foodId }) => {
-      await api.patch(
-        `/requests/${id}/status`,
-        { status },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      await api.patch(`/requests/${id}/status`, { status })
 
       if (String(status).toLowerCase() === 'accepted' && foodId) {
-        await api.patch(
-          `/foods/${foodId}`,
-          { status: 'Donated' },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
+        await api.patch(`/foods/${foodId}`, { status: 'Donated' })
       }
     },
     onSuccess: () => {
@@ -52,7 +41,8 @@ function DonorRequests() {
       queryClient.invalidateQueries({ queryKey: ['featured-foods'] })
     },
     onError: err => {
-      const msg = err?.response?.data?.message || 'Failed to update request status.'
+      const msg =
+        err?.response?.data?.message || 'Failed to update request status.'
       error(msg)
     }
   })
@@ -95,13 +85,17 @@ function DonorRequests() {
 
           <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-semibold border border-[var(--all-badge-border)] bg-[var(--all-badge-bg)]">
             <span className="inline-block size-2 rounded-full bg-[var(--primary)]" />
-            <span className="truncate text-[var(--primary)]">{data.length} requests</span>
+            <span className="truncate text-[var(--primary)]">
+              {data.length} requests
+            </span>
           </div>
         </div>
 
         {data.length === 0 ? (
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[0_14px_40px_rgba(2,6,23,.10)]">
-            <p className="text-[var(--text-soft)]">You have no incoming requests.</p>
+            <p className="text-[var(--text-soft)]">
+              You have no incoming requests.
+            </p>
           </div>
         ) : (
           <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-[0_14px_40px_rgba(2,6,23,.10)]">
@@ -109,14 +103,30 @@ function DonorRequests() {
               <table className="min-w-[900px] w-full text-left text-sm">
                 <thead>
                   <tr className=" bg-[var(--bg-main-layout)]">
-                    <th className="p-4 font-extrabold text-[var(--text)]">Food</th>
-                    <th className="p-4 font-extrabold text-[var(--text)]">Requester</th>
-                    <th className="p-4 font-extrabold text-[var(--text)]">Email</th>
-                    <th className="p-4 font-extrabold text-[var(--text)]">Location</th>
-                    <th className="p-4 font-extrabold text-[var(--text)]">Reason</th>
-                    <th className="p-4 font-extrabold text-[var(--text)]">Contact</th>
-                    <th className="p-4 font-extrabold text-[var(--text)]">Status</th>
-                    <th className="p-4 font-extrabold text-[var(--text)] !text-center">Actions</th>
+                    <th className="p-4 font-extrabold text-[var(--text)]">
+                      Food
+                    </th>
+                    <th className="p-4 font-extrabold text-[var(--text)]">
+                      Requester
+                    </th>
+                    <th className="p-4 font-extrabold text-[var(--text)]">
+                      Email
+                    </th>
+                    <th className="p-4 font-extrabold text-[var(--text)]">
+                      Location
+                    </th>
+                    <th className="p-4 font-extrabold text-[var(--text)]">
+                      Reason
+                    </th>
+                    <th className="p-4 font-extrabold text-[var(--text)]">
+                      Contact
+                    </th>
+                    <th className="p-4 font-extrabold text-[var(--text)]">
+                      Status
+                    </th>
+                    <th className="p-4 font-extrabold text-[var(--text)] !text-center">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
 
@@ -139,11 +149,21 @@ function DonorRequests() {
                             '—'
                           )}
                         </td>
-                        <td className="p-4 text-[var(--text-soft)]">{r.requesterName || '—'}</td>
-                        <td className="p-4 text-[var(--text-soft)]">{r.requesterEmail || '—'}</td>
-                        <td className="p-4 text-[var(--text-soft)]">{r.location || '—'}</td>
-                        <td className="p-4 text-[var(--text-soft)]">{r.reason || '—'}</td>
-                        <td className="p-4 text-[var(--text-soft)]">{r.contactNo || '—'}</td>
+                        <td className="p-4 text-[var(--text-soft)]">
+                          {r.requesterName || '—'}
+                        </td>
+                        <td className="p-4 text-[var(--text-soft)]">
+                          {r.requesterEmail || '—'}
+                        </td>
+                        <td className="p-4 text-[var(--text-soft)]">
+                          {r.location || '—'}
+                        </td>
+                        <td className="p-4 text-[var(--text-soft)]">
+                          {r.reason || '—'}
+                        </td>
+                        <td className="p-4 text-[var(--text-soft)]">
+                          {r.contactNo || '—'}
+                        </td>
 
                         <td className="p-4">
                           <span
