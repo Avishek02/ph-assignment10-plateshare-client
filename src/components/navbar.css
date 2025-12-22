@@ -114,8 +114,8 @@
   text-decoration: none;
 }
 
-.login-btn:hover{
-  background-color: var(--accent-strong) !important ;
+.login-btn:hover {
+  background-color: var(--accent-strong) !important;
 }
 
 .hamburger {
@@ -131,8 +131,11 @@
   display: none;
   flex-direction: column;
   gap: 12px;
-  background: #fff;
-  padding: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 10px;
   border-radius: 8px;
   position: absolute;
   top: 56px;
@@ -144,11 +147,36 @@
 .mobile-menu a {
   color: var(--primary);
   text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
-.mobile-menu a:hover{
+.mobile-menu a:hover {
   background-color: #22c55e26;
 }
+
+
+.mobile-menu .logout-btn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  border: 1px solid #fecaca;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mobile-menu .logout-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+
+
 
 .mobile-menu.show {
   display: flex;
@@ -162,4 +190,95 @@
   .hamburger {
     display: block;
   }
+}
+
+
+
+
+
+
+
+
+/* Profile image dropdown */
+
+.profile-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.profile-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 190px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  display: none;
+  z-index: 50;
+}
+
+.profile-menu.show {
+  display: block;
+}
+
+.profile-menu a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.profile-menu a:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+
+
+
+
+
+/* dropdown background */
+.profile-menu {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  /* background-color: #16a34a1a; */
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* logout button */
+.profile-menu .logout-btn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  border: 1px solid #fecaca;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile-menu .logout-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
 }

@@ -1,13 +1,32 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './navbar.css'
-import logo from "../assets/plateshare_logo.png";
+import logo from "../assets/plateshare_logo.png"
+import defaultAvatar from "../assets/default_avatar.jpg"
+
 
 
 function Navbar() {
   const { user, logout } = useAuth()
   const [open, setOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const profileRef = useRef(null)
+
+
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const profileImg = user?.photoURL || defaultAvatar
+
 
   return (
     <nav className='nav'>
@@ -19,43 +38,73 @@ function Navbar() {
           </Link>
         </div>
 
-
         <div className='nav-links'>
           <Link to='/'>Home</Link>
           <Link to='/foods'>Foods</Link>
 
-          {user && (
-            <>
-              <Link to='/add-food'>Add Food</Link>
-              <Link to='/manage-foods'>My Foods</Link>
-              <Link to='/my-requests'>My Requests</Link>
-              <Link to='/donor-requests'>Donation Requests</Link>
-              <button className='logout-btn inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-sm font-bold capitalize' onClick={logout}>Logout</button>
-            </>
-          )}
+          {user ? (
+            <div className='profile-dropdown' ref={profileRef}>
+              <button
+                type="button"
+                className='profile-btn'
+                onClick={() => setProfileOpen(!profileOpen)}
+                aria-label="User menu"
+              >
+                <img
+                  src={profileImg}
+                  alt="User profile"
+                  className='profile-img'
+                />
+              </button>
 
-          {!user && (
-            <Link className='login-btn rounded-full px-4 py-1 text-sm font-bold capitalize' to='/login'>Login</Link>
+              <div className={`profile-menu ${profileOpen ? 'show' : ''}`}>
+                <Link to='/add-food' onClick={() => setProfileOpen(false)}>Add Food</Link>
+                <Link to='/manage-foods' onClick={() => setProfileOpen(false)}>My Foods</Link>
+                <Link to='/my-requests' onClick={() => setProfileOpen(false)}>My Requests</Link>
+                <Link to='/donor-requests' onClick={() => setProfileOpen(false)}>Donation Requests</Link>
+                <button
+                  className='logout-btn'
+                  onClick={() => {
+                    setProfileOpen(false)
+                    logout()
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link className='login-btn rounded-full px-4 py-1 text-sm font-bold capitalize' to='/login'>
+              Login
+            </Link>
           )}
         </div>
 
         <button className='hamburger' onClick={() => setOpen(!open)}>☰</button>
 
         <div className={`mobile-menu ${open ? 'show' : ''}`}>
-          <Link to='/'>Home</Link>
-          <Link to='/foods'>Foods</Link>
+          <Link to='/' onClick={() => setOpen(false)}>Home</Link>
+          <Link to='/foods' onClick={() => setOpen(false)}>Foods</Link>
 
-          {user && (
+          {user ? (
             <>
-              <Link to='/add-food'>Add Food</Link>
-              <Link to='/manage-foods'>My Foods</Link>
-              <Link to='/my-requests'>My Requests</Link>
-              <Link to='/donor-requests'>Donation Requests</Link>
-              <button className='logout-btn' onClick={logout}>Logout</button>
+              <Link to='/add-food' onClick={() => setOpen(false)}>Add Food</Link>
+              <Link to='/manage-foods' onClick={() => setOpen(false)}>My Foods</Link>
+              <Link to='/my-requests' onClick={() => setOpen(false)}>My Requests</Link>
+              <Link to='/donor-requests' onClick={() => setOpen(false)}>Donation Requests</Link>
+              <button
+                className='logout-btn'
+                onClick={() => {
+                  setOpen(false)
+                  logout()
+                }}
+              >
+                Logout
+              </button>
             </>
+          ) : (
+            <Link to='/login' className='login-btn' onClick={() => setOpen(false)}>Login</Link>
           )}
-
-          {!user && <Link to='/login' className='login-btn'>Login</Link>}
         </div>
       </div>
     </nav>
