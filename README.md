@@ -2,7 +2,7 @@
 
 PlateShare is a community-driven food sharing web application where users can donate surplus food and request available food items to reduce food waste.
 
-🌐 Live Site: https://plateshare-client.vercel.app/
+🌐 Live Site: https://platesharee.vercel.app/
 
 ## Features
 - Users can donate food with details like quantity, location, and expiry date
@@ -39,7 +39,7 @@ PlateShare is a community-driven food sharing web application where users can do
 
 ## Setup
 ```bash
-git clone https://github.com/Avishek02/ph-assignment10-plateshare-client.git
+git clone https://github.com/Avishek02/ph-assignment10-plateshare.git
 cd client
 npm install
 npm run dev
