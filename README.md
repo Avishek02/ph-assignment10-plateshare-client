@@ -9,14 +9,16 @@ PlateShare is a community-driven food sharing web application where users can do
 
 
 # Demo Screenshots
-## Public pages
+## 🌐Public pages  
 ![Overview](screenshots/overview.png)
 ![Featured Foods](screenshots/featured-foods.png)
 ![Impact](screenshots/impact.png)
 ![Available Foods](screenshots/available-foods.png)
 
 
-## User Private pages
+<br><br>
+
+## 🔒User Private pages
 ![My Foods](screenshots/my-foods.png)
 ![My Requests](screenshots/my-requests.png)
 ![Donation Requests](screenshots/donation-requests.png)
