@@ -80,11 +80,6 @@
   text-decoration: none;
 }
 
-.nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
 
 
 .logout-btn {

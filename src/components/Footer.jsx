@@ -23,26 +23,29 @@ function Footer() {
             </p>
 
             <div className="mt-1 text-sm leading-none text-[var(--text-soft)]">
-              Phone: +880 1848932071
+              Whatsapp: +880 1909912507
             </div>
             <div className="text-sm leading-none text-[var(--text-soft)]">
-              Email: support@plateshare.com
+              Email: avishek2390@gmail.com
             </div>
           </div>
 
           <div className="grid gap-0 leading-none">
             <div className="text-sm font-extrabold text-[var(--text)]">Explore</div>
+            <Link to="/" className="text-sm leading-none text-[var(--text-soft)] hover:underline">
+              Home
+            </Link>
             <Link to="/foods" className="text-sm leading-none text-[var(--text-soft)] hover:underline">
               Foods
             </Link>
             <Link to="/add-food" className="text-sm leading-none text-[var(--text-soft)] hover:underline">
               Donate
             </Link>
-            <Link to="/requests" className="text-sm leading-none text-[var(--text-soft)] hover:underline">
+            <Link to="/my-requests" className="text-sm leading-none text-[var(--text-soft)] hover:underline">
               Requests
             </Link>
-            <Link to="/dashboard" className="text-sm leading-none text-[var(--text-soft)] hover:underline">
-              Dashboard
+            <Link to="/donor-requests" className="text-sm leading-none text-[var(--text-soft)] hover:underline">
+              Donation Requests
             </Link>
           </div>
 
@@ -101,8 +104,8 @@ function Footer() {
             <Link to="/terms" className="text-[var(--text-soft)] hover:underline">
               Terms
             </Link>
-            <a href="mailto:support@plateshare.com" className="text-[var(--text-soft)] hover:underline">
-              support@plateshare.com
+            <a href="mailto:avishek2390@gmail.com" className="text-[var(--text-soft)] hover:underline">
+              avishek2390@gmail.com
             </a>
           </div>
         </div>

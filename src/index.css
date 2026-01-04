@@ -28,6 +28,7 @@
   --bg: #ffffff;
   --bg-soft: #f9fafb;
   --bg-main-layout: #b0f6ca1a;
+  --input-bg: rgba(255, 255, 255, 0.6)
 
 
   --primary: #1db440;
@@ -38,7 +39,10 @@
   --text: #111827;
   --text-soft: #6b7280;
 
-  --card: #ffffff;
+
+  /* --card: rgba(255, 255, 255, 0.7); */
+  --card: #fff;
+  --inner-card:rgba(255, 255, 255, 0.7);
   --border: #e5e7eb;
   --danger: #ef4444;
   /* --all-badge-color: #f97316; */
@@ -87,6 +91,22 @@
 
 
 }
+
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --text: #fff;
+    --text-soft: #D1D5DB;
+  }
+}
+
+[data-theme="dark"]{--text: #fff;}
+[data-theme="dark"]{--text-soft: #D1D5DB;}
+[data-theme="dark"]{--card: #0f172a;}
+[data-theme="dark"]{--border: #1e293b;}
+[data-theme="dark"]{--inner-card: #020617;}
+[data-theme="dark"]{--input-bg: #020617;}
+
 
 
 * {
@@ -341,7 +361,7 @@ textarea {
   width: 100%;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: #ffffff;
+  /* background: #ffffff; */
   color: var(--text);
   padding: 8px 12px;
   font-size: 14px;

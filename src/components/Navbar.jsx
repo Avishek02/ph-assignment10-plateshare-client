@@ -10,8 +10,29 @@ function Navbar() {
   const [open, setOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [hideNav, setHideNav] = useState(false)
+  const [theme, setTheme] = useState('auto')
   const profileRef = useRef(null)
   const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme')
+    if (saved) {
+      setTheme(saved)
+      if (saved !== 'auto') {
+        document.documentElement.setAttribute('data-theme', saved)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+      localStorage.removeItem('theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+      localStorage.setItem('theme', theme)
+    }
+  }, [theme])
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -25,10 +46,8 @@ function Navbar() {
 
   useEffect(() => {
     lastScrollY.current = window.scrollY
-
     const handleScroll = () => {
       const currentY = window.scrollY
-
       if (currentY > lastScrollY.current && currentY > 80) {
         setHideNav(true)
         setOpen(false)
@@ -36,20 +55,24 @@ function Navbar() {
       } else {
         setHideNav(false)
       }
-
       lastScrollY.current = currentY
     }
-
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const profileImg = user?.photoURL ?? defaultAvatar
 
+  const toggleTheme = () => {
+    setTheme(prev =>
+      prev === 'light' ? 'dark' : prev === 'dark' ? 'auto' : 'light'
+    )
+  }
+
   return (
     <nav className={`nav ${hideNav ? 'nav-hide' : ''}`}>
-      <div className='nav-container '>
-        <div className='flex items-center '>
+      <div className='nav-container'>
+        <div className='flex items-center'>
           <img src={logo} alt="plateshare logo" className='w-10 h-10' />
           <Link to='/' className='nav-logo text-3xl text-brand-gradient font-extrabold'>
             PlateShare
@@ -60,13 +83,16 @@ function Navbar() {
           <Link to='/'>Home</Link>
           <Link to='/foods'>Foods</Link>
 
+          <button className='theme-toggle' onClick={toggleTheme}>
+            {theme === 'dark' ? '🌙' : theme === 'light' ? '☀️' : '🖥️'}
+          </button>
+
           {user ? (
             <div className='profile-dropdown' ref={profileRef}>
               <button
                 type="button"
                 className='profile-btn'
                 onClick={() => setProfileOpen(!profileOpen)}
-                aria-label="User menu"
               >
                 <img
                   src={profileImg}
@@ -102,31 +128,6 @@ function Navbar() {
         </div>
 
         <button className='hamburger' onClick={() => setOpen(!open)}>☰</button>
-
-        <div className={`mobile-menu ${open ? 'show' : ''}`}>
-          <Link to='/' onClick={() => setOpen(false)}>Home</Link>
-          <Link to='/foods' onClick={() => setOpen(false)}>Foods</Link>
-
-          {user ? (
-            <>
-              <Link to='/add-food' onClick={() => setOpen(false)}>Add Food</Link>
-              <Link to='/manage-foods' onClick={() => setOpen(false)}>My Foods</Link>
-              <Link to='/my-requests' onClick={() => setOpen(false)}>My Requests</Link>
-              <Link to='/donor-requests' onClick={() => setOpen(false)}>Donation Requests</Link>
-              <button
-                className='logout-btn'
-                onClick={() => {
-                  setOpen(false)
-                  logout()
-                }}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link to='/login' className='login-btn' onClick={() => setOpen(false)}>Login</Link>
-          )}
-        </div>
       </div>
     </nav>
   )

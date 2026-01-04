@@ -14,6 +14,11 @@ import DonorRequests from './pages/DonorRequests.jsx'
 import UpdateFood from './pages/UpdateFood.jsx'
 import Footer from './components/Footer.jsx'
 import { Toaster } from 'react-hot-toast'
+import Privacy from './pages/Privacy.jsx'
+import Terms from './pages/Terms.jsx'
+import About from './pages/About.jsx'
+import Contact from './pages/Contact.jsx'
+
 
 
 
@@ -28,6 +33,14 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/foods' element={<AvailableFoods />} />
+
+          {/* Footer routes  */}
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+
+
           <Route
             path='/food/:id'
             element={
