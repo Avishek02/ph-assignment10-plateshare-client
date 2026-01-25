@@ -501,6 +501,104 @@ function Home() {
           </div>
         </div>
       </motion.section>
+
+      {/* Stats Section */}
+      <motion.section className="px-4 py-12 bg-[var(--primary)] text-white" {...inView}>
+        <div className="mx-auto max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { label: 'Total Donations', value: '500+' },
+            { label: 'Active Users', value: '1.2k' },
+            { label: 'Cities Covered', value: '15+' },
+            { label: 'Meals Shared', value: '2.5k' }
+          ].map((stat, i) => (
+            <div key={i}>
+              <div className="text-3xl font-bold">{stat.value}</div>
+              <div className="text-sm opacity-80">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+
+      {/* Categories Section */}
+      <section className="px-4 py-14" {...inView}>
+        <div className="mx-auto max-w-6xl text-center">
+          <h2 className="text-3xl font-bold mb-8">What can you share?</h2>
+          <div className="flex flex-wrap justify-center gap-6">
+            {['Cooked Meals', 'Fruits & Veggies', 'Bakery Items', 'Dry Rations'].map((cat) => (
+              <div key={cat} className="px-8 py-10 rounded-2xl border border-[var(--border)] bg-white shadow-sm w-44 hover:shadow-md transition">
+                <div className="text-lg font-semibold">{cat}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Testimonials  */}
+      <section className="px-4 py-14 bg-gray-50" {...inView}>
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-10">Voice of Community</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="p-6 bg-white rounded-xl shadow-sm border border-[var(--border)]">
+                <p className="text-[var(--text-soft)] italic">"PlateShare helped me find support when I needed it most. Truly a life-changing platform."</p>
+                <div className="mt-4 font-bold text-[var(--primary)]">- Member {i}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Safety Guidelines */}
+      <section className="px-4 py-14" {...inView}>
+        <div className="mx-auto max-w-4xl border border-dashed border-[var(--primary)] rounded-3xl p-8 bg-green-50/30">
+          <h2 className="text-2xl font-bold text-center mb-6">Safety First</h2>
+          <ul className="grid md:grid-cols-2 gap-4 text-[var(--text-soft)]">
+            <li className="flex gap-2">✅ Check expiry dates before sharing.</li>
+            <li className="flex gap-2">✅ Maintain hygiene during packaging.</li>
+            <li className="flex gap-2">✅ Meet in public places for pickup.</li>
+            <li className="flex gap-2">✅ Report suspicious listings immediately.</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Mobile App Teaser */}
+      <section className="px-4 py-14 bg-slate-900 text-white overflow-hidden rounded-t-[3rem]" {...inView}>
+        <div className="mx-auto max-w-6xl flex flex-col md:flex-row items-center gap-10">
+          <div className="flex-1">
+            <h2 className="text-3xl font-bold">PlateShare in your pocket</h2>
+            <p className="mt-4 text-gray-400">Get instant notifications for nearby food donations. Coming soon to iOS and Android.</p>
+            <button className="mt-6 px-8 py-3 bg-[var(--primary)] rounded-full font-bold">Notify Me</button>
+          </div>
+          <div className="flex-1 h-64 bg-slate-800 rounded-2xl border border-slate-700 flex items-center justify-center text-gray-500">App Preview Image</div>
+        </div>
+      </section>
+
+      {/* Supporters  */}
+      <section className="px-4 py-10 opacity-60 grayscale hover:grayscale-0 transition duration-500" {...inView}>
+        <div className="mx-auto max-w-6xl flex flex-wrap justify-center gap-12 items-center">
+          <span className="text-xl font-bold">Local Food Bank</span>
+          <span className="text-xl font-bold">Green Earth NGO</span>
+          <span className="text-xl font-bold">Community Kitchen</span>
+          <span className="text-xl font-bold">City Council</span>
+        </div>
+      </section>
+
+
+      {/* CTA/ Newsletter  */}
+      <section className="px-4 py-20" {...inView}>
+        <div className="mx-auto max-w-4xl bg-brand-gradient p-12 rounded-[2.5rem] text-center text-white shadow-xl">
+          <h2 className="text-4xl font-extrabold">Ready to make a difference?</h2>
+          <p className="mt-4 text-lg opacity-90">Join 1,000+ neighbors already sharing food today.</p>
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+            <Link to="/register" className="px-10 py-4 bg-white text-[var(--primary)] font-bold rounded-full">Join Now</Link>
+            <Link to="/foods" className="px-10 py-4 bg-transparent border-2 border-white font-bold rounded-full">Explore Foods</Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   )
 }

@@ -1,3 +1,12 @@
+body {
+  padding-top: 0;
+  margin: 0;
+}
+
+main, .hero-section {
+  padding-top: 70px; /* Match your navbar height */
+}
+
 .nav-inner {
   max-width: 1120px;
   margin: 0 auto;
@@ -273,21 +282,17 @@
 /* Navbar scrolling animaion  */
 
 .nav {
-  /* background: rgba(34, 197, 94, .15); */
   background: rgba(22, 163, 74, 0.102);
   padding: 14px 16px;
-
-  position: sticky;
+  position: fixed; /* sticky er bodle fixed use kora better translate er jnno */
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 999;
   transition: transform 0.25s ease;
   will-change: transform;
-
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-
-  /* border-bottom: 1px solid var(--border); */
-
 }
 
 .nav.nav-hide {
